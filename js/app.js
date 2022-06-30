@@ -1,9 +1,12 @@
 import { carritoHTML } from "./carrito.js"
+// import { eliminarElemento } from "./eliminarElemento.js"
 import * as v from "./variables.js"
-let articulosCarrito = []
+var articulosCarrito = []
+
 document.addEventListener('DOMContentLoaded', () => {
     v.listaCursos.addEventListener('click', agregarCurso)
 
+    v.carrito.addEventListener('click', eliminarElemento)
 })
 
 export function agregarCurso(e) {
@@ -28,10 +31,37 @@ function leerDatosCurso(curso) {
     // console.log(infoCurso);
     // Agregar elementos al arreglo del carrito
 
-    articulosCarrito = [...articulosCarrito, infoCurso]
     // console.log(articulosCarrito);
-    
+
+    // Sumar cantidades
+    const existe = articulosCarrito.some(curso => curso.id === infoCurso.id)//Devuelve un booleano en caso de existir un elemento o no dentro del array
+    console.log(existe);
+    if (existe) {
+        articulosCarrito.map(curso => {
+            if (curso.id === infoCurso.id) {
+                curso.cantidad++
+                return
+            }
+        })
+    } else {
+        articulosCarrito = [...articulosCarrito, infoCurso]
+    }
+
     carritoHTML(articulosCarrito)
 }
 
 
+function eliminarElemento(e) {
+    e.preventDefault()
+    // console.log('Eliminar elemento');
+    const eliminar = e.target.matches('.borrar-curso')
+    // console.log(eliminar);
+    if (eliminar) {
+        const cursoID = e.target.getAttribute('data-id')
+        // console.log(cursoID);
+        // console.log(articulosCarrito);
+        articulosCarrito = articulosCarrito.filter(curso => curso.id !== cursoID)
+        // console.log(articulosCarrito);
+        carritoHTML(articulosCarrito)
+    }
+}
