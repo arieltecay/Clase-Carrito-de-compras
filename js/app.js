@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     v.listaCursos.addEventListener('click', agregarCurso)
 
     v.carrito.addEventListener('click', eliminarElemento)
+    v.vaciarCarritoBTN.addEventListener('click', () => { carritoHTML(articulosCarrito = []) })
+
 })
 
 export function agregarCurso(e) {
@@ -64,4 +66,15 @@ function eliminarElemento(e) {
         // console.log(articulosCarrito);
         carritoHTML(articulosCarrito)
     }
+}
+
+function eliminarTodosLosCurso(e) {
+    console.log(e.target.className);
+    carritoHTML(articulosCarrito = [])
+    // if (e.target.className === "button u-full-width") {
+    //     articulosCarrito = [];
+    //     carritoHTML(articulosCarrito)
+    // }
+
+    // articulosCarrito = []
 }
